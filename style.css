@@ -95,13 +95,27 @@ main {
 
 @keyframes bounce {
     0%, 100% { transform: scale(1, 1) translateY(0); }
-    50% { transform: scale(1.1, 0.9) translateY(10px); }
+    50% { transform: scale(1.05, 0.95) translateY(5px); }
+}
+
+/* 呼吸动画加强版 */
+@keyframes breathe {
+    0%, 100% { transform: scale(1, 1); }
+    50% { transform: scale(1.03, 0.97); }
+}
+
+/* 进食动画 */
+@keyframes eat {
+    0% { transform: scale(1, 1); }
+    25% { transform: scale(1.2, 0.8) translateY(10px); }
+    50% { transform: scale(0.9, 1.1) translateY(-15px); }
+    75% { transform: scale(1.1, 0.9) translateY(5px); }
+    100% { transform: scale(1, 1); }
 }
 
 /* 点击反馈动画 */
 .slime.clicked {
-    transform: scale(0.9, 1.1) translateY(-20px);
-    transition: transform 0.1s;
+    animation: eat 0.4s ease;
 }
 
 #slime-name {
@@ -209,3 +223,176 @@ main {
 .log-item.rare { color: #f1c40f; font-weight: bold; }
 .log-item.critical { color: #e74c3c; }
 .log-item.system { color: #0fb9b1; }
+
+/* 漂浮文字动画 */
+.floating-text {
+    position: absolute;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    pointer-events: none;
+    animation: floatUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    z-index: 100;
+}
+
+.floating-text.gem { color: #9b59b6; font-size: 1.5rem; text-shadow: 0 0 10px #e056fd; }
+.floating-text.exp { color: #2ecc71; }
+.floating-text.crit { color: #f1c40f; font-size: 1.6rem; }
+
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(0.5); opacity: 0; }
+    20% { transform: translateY(-20px) scale(1.2); opacity: 1; }
+    100% { transform: translateY(-60px) scale(1); opacity: 0; }
+}
+
+/* 粒子系统 */
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particleOut 0.6s ease-out forwards;
+    z-index: 99;
+}
+
+@keyframes particleOut {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+}
+
+/* Premium button */
+.btn.premium {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn.premium::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+    transform: rotate(30deg);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) rotate(30deg); }
+    100% { transform: translateX(100%) rotate(30deg); }
+}
+
+/* 导航标签 */
+.tabs {
+    display: flex;
+    background-color: #fff;
+    border-bottom: 2px solid #eee;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px 0;
+    border: none;
+    background: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.view {
+    display: none;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.view.active {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 商店样式 */
+.shop-container {
+    padding: 20px;
+}
+
+.shop-container h2 {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 15px 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+.shop-container h2:first-child { margin-top: 0; }
+
+.shop-item {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.shop-item.special {
+    background: linear-gradient(to right, #fff, #fef9e7);
+    border-color: #f1c40f;
+}
+
+.shop-info h3 {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.shop-lvl {
+    font-size: 0.8rem;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 8px;
+}
+
+.shop-info p {
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.highlight { color: #f39c12; font-weight: bold; }
+
+.btn.buy {
+    background-color: #2ecc71;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    min-width: 90px;
+}
+
+.btn.buy:disabled {
+    background-color: #bdc3c7;
+}
+
+.btn.special-buy {
+    background-color: #f1c40f;
+    color: #333;
+}
+
+.btn.danger {
+    background-color: #e74c3c;
+    color: white;
+}
