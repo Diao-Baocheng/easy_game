@@ -1,0 +1,211 @@
+:root {
+    --bg-color: #f4f6f8;
+    --card-bg: #ffffff;
+    --text-main: #2c3e50;
+    --text-light: #7f8c8d;
+    --primary-color: #3498db;
+    --exp-color: #9b59b6;
+    --stamina-color: #e74c3c;
+    --ad-color: #f39c12;
+    
+    /* 史莱姆颜色 */
+    --slime-normal: #8bc34a;
+    --slime-fire: #e53935;
+    --slime-water: #03a9f4;
+    --slime-gold: #ffeb3b;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+#app {
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--card-bg);
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.resource {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+}
+
+/* 史莱姆表现层 */
+.slime-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.slime {
+    width: 100px;
+    height: 80px;
+    border-radius: 50% 50% 10% 10% / 60% 60% 10% 10%;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite ease-in-out;
+    box-shadow: inset -10px -10px 20px rgba(0,0,0,0.2);
+    transition: all 0.5s ease;
+}
+
+.slime.normal { background-color: var(--slime-normal); }
+.slime.fire { background-color: var(--slime-fire); box-shadow: 0 0 20px var(--slime-fire); }
+.slime.water { background-color: var(--slime-water); }
+.slime.gold { background-color: var(--slime-gold); box-shadow: 0 0 30px var(--slime-gold); }
+
+@keyframes bounce {
+    0%, 100% { transform: scale(1, 1) translateY(0); }
+    50% { transform: scale(1.1, 0.9) translateY(10px); }
+}
+
+/* 点击反馈动画 */
+.slime.clicked {
+    transform: scale(0.9, 1.1) translateY(-20px);
+    transition: transform 0.1s;
+}
+
+#slime-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+    background-color: rgba(255,255,255,0.8);
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+/* 状态面板 */
+.stats-card {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.progress-bar {
+    height: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.progress-bar:last-child {
+    margin-bottom: 0;
+}
+
+.fill {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.exp-fill { background-color: var(--exp-color); }
+.stamina-fill { background-color: var(--stamina-color); }
+
+/* 操作按钮 */
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn {
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.2s;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn.primary { background-color: var(--primary-color); }
+.btn.ad { background-color: var(--ad-color); }
+
+/* 日志面板 */
+.log-container {
+    flex: 1;
+    background-color: #1e272e;
+    border-radius: 12px;
+    padding: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.log-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 0.85rem;
+}
+
+.log-item {
+    color: #d2dae2;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.log-item.rare { color: #f1c40f; font-weight: bold; }
+.log-item.critical { color: #e74c3c; }
+.log-item.system { color: #0fb9b1; }
